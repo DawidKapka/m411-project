@@ -1,9 +1,5 @@
 #include <stdio.h>
-
-int main() {
-    Card* pCardList = CreateCardList(10);
-    return 0;
-}
+#include <stdlib.h>
 
 // Card-Struktur, Dawid
 typedef struct Card {
@@ -12,15 +8,24 @@ typedef struct Card {
     int value1;
     double value2;
     struct Card* pNext;
-} Card;
+} sCard;
+
+sCard* CreateCardList(int);
+void OutputList(sCard*);
+
+int main() {
+    sCard* pCardList = CreateCardList(10);
+    OutputList(pCardList);
+    return 0;
+}
 
 // Karten-Liste erstellen, Dawid
-Card* CreateCardList(int cardCount) {
-    Card* pFirst = NULL;
-    Card* pNext = NULL;
+sCard* CreateCardList(int cardCount) {
+    sCard* pFirst = NULL;
+    sCard* pLast = NULL;
 
     for(int el = 0; el < cardCount; el++) {
-        Card* pNew = (Card*)malloc(sizeof(Card));
+        sCard* pNew = (Card*)malloc(sizeof(sCard));
         pNew->number = el + 1;
         pNew->pNext = NULL;
 
@@ -31,3 +36,10 @@ Card* CreateCardList(int cardCount) {
     return pFirst;
 }
 
+void OutputList(sCard* pFirst) {
+    for (sCard* pOutput = pFirst; pOutput != NULL; pOutput++) {
+        printf("Number: %i", pOutput->number);
+        printf("Next Number: %i", pOutput->pNext->number);
+        printf("------------------------------------------");
+    }
+}
