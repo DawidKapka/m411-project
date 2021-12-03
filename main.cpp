@@ -19,7 +19,7 @@ int main() {
     return 0;
 }
 
-// Karten-Liste erstellen, Dawid
+// Karten-Liste erstellen, Dawid & Noah
 sCard* CreateCardList(int cardCount) {
     sCard* pFirst = NULL;
     sCard* pLast = NULL;
