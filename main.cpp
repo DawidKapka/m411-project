@@ -14,7 +14,8 @@ typedef struct Card {
     struct Card* pNext;
 } Card;
 
-// Karten-Liste erstellen, Dawid
+
+// Karten-Liste erstellen, Dawid, Noah
 Card* CreateCardList(int cardCount) {
     Card* pFirst = NULL;
     Card* pNext = NULL;
