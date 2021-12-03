@@ -26,7 +26,7 @@ sCard* CreateCardList(int cardCount) {
     sCard* pLast = NULL;
 
     for (int el = 0; el < cardCount; el++) {
-        sCard* pNew = (Card*)malloc(sizeof(sCard));
+        sCard* pNew = (sCard*)malloc(sizeof(sCard));
         pNew->number = el + 1;
         pNew->pNext = NULL;
 
@@ -38,8 +38,9 @@ sCard* CreateCardList(int cardCount) {
 }
 
 void OutputList(sCard* pFirst) {
-    for (sCard* pOutput = pFirst; pOutput != NULL; pOutput++) {
+    for (sCard* pOutput = pFirst; pOutput != NULL; pOutput = pOutput->pNext) {
         printf("Number: %i", pOutput->number);
-        printf("------------------------------------------");
+        printf("Next Number: %i", pOutput->pNext);
+        printf("\n------------------------------------------\n");
     }
 }
