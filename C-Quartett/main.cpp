@@ -5,7 +5,7 @@
 
 #define ListLength 10;
 
-// Card-Struktur, Dawid
+// Card-Struktur - Dawid
 typedef struct Card {
     int number;
     char name[50];
@@ -15,28 +15,88 @@ typedef struct Card {
 } sCard;
 
 sCard* CreateCardList(int);
-void OutputList(sCard*);
 void MixList(sCard*);
 void SwapCard(sCard*, sCard*, int);
-
+void StartGame(sCard*);
+sCard* GetCurrentPcCard(sCard*, int);
+void OutputCardFormatted(sCard*);
+void OutputTitle();
 
 int main() {
     srand(time(0));
     sCard* pCardList = CreateCardList(10);
     MixList(pCardList);
-    OutputList(pCardList);
+    StartGame(pCardList);
     system("pause");
     return 0;
 }
 
-// Karten-Liste erstellen, Dawid & Noah
+// Titeltext ausgeben - Dawid
+void OutputTitle() {
+    printf("\n ________  ___  ___  ________  ________  _________  _______  _________  _________  \n");
+    printf("|\\   __  \\|\\  \\|\\  \\|\\   __  \\|\\   __  \\|\\___   ___\\\\  ___ \\|\\___   ___\\\\___   ___\\ \n");
+    printf("\\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\|\\  \\ \\  \\|\\  \\|___ \\  \\_\\ \\   __/\\|___ \\  \\_\\|___ \\  \\_| \n");
+    printf(" \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\   __  \\ \\   _  _\\   \\ \\  \\ \\ \\  \\_|/__  \\ \\  \\     \\ \\  \\  \n");
+    printf("  \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\ \\  \\ \\  \\\\  \\|   \\ \\  \\ \\ \\  \\_|\\ \\  \\ \\  \\     \\ \\  \\ \n");
+    printf("   \\ \\_____  \\ \\_______\\ \\__\\ \\__\\ \\__\\\\ _\\    \\ \\__\\ \\ \\_______\\  \\ \\__\\     \\ \\__\\\n");
+    printf("    \\|___| \\__\\|_______|\\|__|\\|__|\\|__|\\|__|    \\|__|  \\|_______|   \\|__|      \\|__|\n");
+    printf("          \\|__|\n\n\n");
+    printf("----------------------------------------------------------------------------------------\n\n\n");
+}
+
+// Spiel starten - Noah
+void StartGame(sCard* pFirst) {
+    int playerCards = 5;
+    int pcCards = 5;
+    sCard* pCurrentPlayerCard = pFirst;
+    sCard* pCurrentPcCard = GetCurrentPcCard(pFirst, playerCards);
+    OutputTitle();
+    while (playerCards > 0 && pcCards > 0)
+    {
+        int playedValue = 1;
+        OutputCardFormatted(pCurrentPlayerCard);
+        printf("Welchen Wert wollen sie spielen? (1/2)");
+
+    }
+
+
+}
+
+
+
+// Karte Formatiert in der Console ausgeben - Dawid
+void OutputCardFormatted(sCard* pCard) {
+    printf("+--------Karte--------+\n");
+    printf("| Name: ");
+    puts(pCard->name);
+    printf("| Value 1: %i\n", pCard->value1);
+    printf("| Value 2: %lf\n", pCard->value2);
+    printf("+---------------------+\n");
+}
+
+// Erste Karte vom PC bestimmen - Noah
+sCard* GetCurrentPcCard(sCard* pFirst, int amount) {
+    sCard* pCurrentPcCard = pFirst;
+    for (int i = 0; i < amount; i++)
+    {
+
+        pCurrentPcCard = pCurrentPcCard->pNext;
+    }
+    return pCurrentPcCard;
+}
+
+// Karten-Liste erstellen - Noah
 sCard* CreateCardList(int cardCount) {
     sCard* pFirst = NULL;
     sCard* pLast = NULL;
 
-    for (int el = 0; el < cardCount; el++) {
+    for (int el = 0; el < cardCount; el++)
+    {
         sCard* pNew = (sCard*)malloc(sizeof(sCard));
         pNew->number = el + 1;
+        strcpy_s(pNew->name, "Test");
+        pNew->value1 = 20;
+        pNew->value2 = 10.0;
         pNew->pNext = NULL;
         if (pFirst == NULL) pFirst = pNew;
         if (pLast != NULL) pLast->pNext = pNew;
@@ -45,14 +105,7 @@ sCard* CreateCardList(int cardCount) {
     return pFirst;
 }
 
-void OutputList(sCard* pFirst) {
-    for (sCard* pOutput = pFirst; pOutput != NULL; pOutput = pOutput->pNext)
-    {
-        printf("Number: %i", pOutput->number);
-        printf("\n------------------------------------------\n");
-    }
-}
-
+// Kartenlisten mischeln - Dawid
 void MixList(sCard* pFirst) {
     int randomNumber;
     for (sCard* pTemp = pFirst; pTemp != NULL; pTemp = pTemp->pNext)
@@ -61,10 +114,12 @@ void MixList(sCard* pFirst) {
     }
 }
 
+// 2 Karten Tauschen - Dawid
 void SwapCard(sCard* pFirst, sCard* pSource, int number) {
     sCard* pTemp = (sCard*)malloc(sizeof(sCard));
     sCard* pCurrent = pFirst;
-    while (pCurrent && pCurrent->number != number) {
+    while (pCurrent && pCurrent->number != number)
+    {
         pCurrent = pCurrent->pNext;
     }
     if (pCurrent)
