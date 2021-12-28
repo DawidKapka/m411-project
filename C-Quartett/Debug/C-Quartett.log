@@ -1,4 +1,4 @@
 ﻿  main.cpp
-C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(26,15): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
-C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(100,9): warning C4101: "randomNumber": Unreferenzierte lokale Variable
-  C-Quartett.vcxproj -> C:\Users\vmadmin\source\repos\C-Quartett\Debug\C-Quartett.exe
+E:\bs\m411-project\C-Quartett\main.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\bs\m411-project\C-Quartett\main.cpp(123,9): warning C4101: 'randomNumber': unreferenced local variable
+  C-Quartett.vcxproj -> E:\bs\m411-project\Debug\C-Quartett.exe

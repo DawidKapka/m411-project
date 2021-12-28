@@ -48,15 +48,28 @@ void OutputTitle() {
 void StartGame(sCard* pFirst) {
     int playerCards = 5;
     int pcCards = 5;
+    short round = 1;
     sCard* pCurrentPlayerCard = pFirst;
     sCard* pCurrentPcCard = GetCurrentPcCard(pFirst, playerCards);
     OutputTitle();
     while (playerCards > 0 && pcCards > 0)
     {
         int playedValue = 1;
+        int answer = 0;
+        printf("************\n");
+        printf("  Runde %i\n", round);
+        printf("************\n\n");
         OutputCardFormatted(pCurrentPlayerCard);
-        printf("Welchen Wert wollen sie spielen? (1/2)");
-
+        printf("Welchen Wert willst du spielen? (1/2): ");
+        scanf_s("%i", &answer);
+        if (answer >= 0 && answer <= 2)
+        {
+            printf("\nG\x81ltige Eingabe!\n");
+            round++;
+        }
+        else {
+            printf("\nUng\x81ultige Eingabe!\n");
+        }
     }
 
 
@@ -66,12 +79,12 @@ void StartGame(sCard* pFirst) {
 
 // Karte Formatiert in der Console ausgeben - Dawid
 void OutputCardFormatted(sCard* pCard) {
-    printf("+--------Karte--------+\n");
+    printf("+--------Deine Karte--------+\n");
     printf("| Name: ");
     puts(pCard->name);
     printf("| Value 1: %i\n", pCard->value1);
     printf("| Value 2: %lf\n", pCard->value2);
-    printf("+---------------------+\n");
+    printf("+---------------------------+\n\n");
 }
 
 // Erste Karte vom PC bestimmen - Noah
