@@ -59,12 +59,28 @@ void StartGame(sCard* pFirst) {
         printf("************\n");
         printf("  Runde %i\n", round);
         printf("************\n\n");
+        printf("Deine Karte:\n\n");
         OutputCardFormatted(pCurrentPlayerCard);
+        printf("Pc Karte:\n\n");
+        OutputCardFormatted(pCurrentPcCard);
         printf("Welchen Wert willst du spielen? (1/2): ");
         scanf_s("%i", &answer);
         if (answer >= 0 && answer <= 2)
         {
-            printf("\nG\x81ltige Eingabe!\n");
+            
+            bool roundWon = false;
+            if (answer == 1)
+            {
+                if (pCurrentPlayerCard->value1 > pCurrentPcCard->value1) roundWon = true;
+            }
+            else
+            {
+                if (pCurrentPlayerCard->value2 > pCurrentPcCard->value2) roundWon = true;
+                {
+
+                }
+            }
+            printf("%i", roundWon);
             round++;
         }
         else {
@@ -79,12 +95,12 @@ void StartGame(sCard* pFirst) {
 
 // Karte Formatiert in der Console ausgeben - Dawid
 void OutputCardFormatted(sCard* pCard) {
-    printf("+--------Deine Karte--------+\n");
+    printf("+--------Karte--------+\n");
     printf("| Name: ");
     puts(pCard->name);
     printf("| Value 1: %i\n", pCard->value1);
     printf("| Value 2: %lf\n", pCard->value2);
-    printf("+---------------------------+\n\n");
+    printf("+---------------------+\n\n");
 }
 
 // Erste Karte vom PC bestimmen - Noah
@@ -102,14 +118,16 @@ sCard* GetCurrentPcCard(sCard* pFirst, int amount) {
 sCard* CreateCardList(int cardCount) {
     sCard* pFirst = NULL;
     sCard* pLast = NULL;
+    int value1[10] = { 2,6,45,34,75,32,45,34,88,30 };
+    double value2[10] = { 20.00, 14.00, 16.3, 25.3, 75.3, 45.2, 66.4, 12.5, 78.0, 55.9 };
 
     for (int el = 0; el < cardCount; el++)
     {
         sCard* pNew = (sCard*)malloc(sizeof(sCard));
         pNew->number = el + 1;
         strcpy_s(pNew->name, "Test");
-        pNew->value1 = 20;
-        pNew->value2 = 10.0;
+        pNew->value1 = value1[el];
+        pNew->value2 = value2[el];
         pNew->pNext = NULL;
         if (pFirst == NULL) pFirst = pNew;
         if (pLast != NULL) pLast->pNext = pNew;
