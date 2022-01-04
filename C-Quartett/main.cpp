@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <conio.h>
+#include <ctype.h>
 
 #define ListLength 10;
 
@@ -24,6 +26,7 @@ void OutputCardFormatted(sCard*);
 void OutputTitle();
 bool ProcessAnswer(sCard*, sCard*, int*);
 bool CheckLoss(sCard*, sCard*);
+char* GetNameArray();
 
 int main() {
     srand(time(0));
@@ -44,6 +47,7 @@ void OutputTitle() {
     printf("   \\ \\_____  \\ \\_______\\ \\__\\ \\__\\ \\__\\\\ _\\    \\ \\__\\ \\ \\_______\\  \\ \\__\\     \\ \\__\\\n");
     printf("    \\|___| \\__\\|_______|\\|__|\\|__|\\|__|\\|__|    \\|__|  \\|_______|   \\|__|      \\|__|\n");
     printf("          \\|__|\n\n\n");
+    printf("                                                      by Noah Buchs & Dawid Kapka\n");
     printf("----------------------------------------------------------------------------------------\n\n\n");
 }
 
@@ -54,9 +58,9 @@ void StartGame(sCard* pFirst) {
     short round = 1;
     sCard* pCurrentPlayerCard = GetNextCard(true, pFirst, pFirst);
     sCard* pCurrentPcCard = GetNextCard(false, pFirst, pFirst);
-    OutputTitle();
     while (playerCards > 0 && pcCards > 0)
     {
+        OutputTitle();
         int playedValue = 1;
         int answer = 0;
         printf("************\n");
@@ -64,21 +68,24 @@ void StartGame(sCard* pFirst) {
         printf("************\n\n");
         printf("Deine Karte:\n\n");
         OutputCardFormatted(pCurrentPlayerCard);
-        printf("Welchen Wert willst du spielen? (1/2): ");        
+        printf("Welchen Wert willst du spielen? (1/2): ");
         scanf_s("%i", &answer);
         if (answer >= 0 && answer <= 2)
         {
             bool roundWon = ProcessAnswer(pCurrentPlayerCard, pCurrentPcCard, &answer);
             if (roundWon)
             {
-
+                printf("\nDu hast diese Runde gewonnen!\n");
                 pCurrentPcCard->ownedByPlayer = true;
                 pCurrentPlayerCard = pCurrentPlayerCard->pNext;
             }
             else {
+                printf("\nDu hast diese Runde verloren!\n");
                 pCurrentPlayerCard->ownedByPlayer = false;
                 pCurrentPcCard = pCurrentPcCard->pNext;
             }
+            printf("\nKarte des Gegners:\n\n");
+            OutputCardFormatted(pCurrentPcCard);
             round++;
             pCurrentPlayerCard = GetNextCard(true, pFirst, pCurrentPlayerCard);
             pCurrentPcCard = GetNextCard(false, pFirst, pCurrentPcCard);
@@ -91,11 +98,14 @@ void StartGame(sCard* pFirst) {
         else {
             printf("\nUng\x81ultige Eingabe!\n");
         }
+        char continueGame;
+        printf("\nKlicke Enter um weiterzuspielen...\n");
+        _getch();
+        system("@cls||clear");
     }
-
-
 }
 
+// Überprüfen, ob Spieler oder PC verloren hat - Noah
 bool CheckLoss(sCard* pPlayer, sCard* pPc) {
     if (pPlayer == NULL)
     {
@@ -119,32 +129,40 @@ bool ProcessAnswer(sCard* pCurrentPlayerCard, sCard* pCurrentPcCard, int* answer
     }
     else
     {
-        if (pCurrentPlayerCard->value2 > pCurrentPcCard->value2) roundWon = true;
+        if (pCurrentPlayerCard->value2 < pCurrentPcCard->value2) roundWon = true;
     }
     return roundWon;
     
 }
 // Karte Formatiert in der Console ausgeben - Dawid
 void OutputCardFormatted(sCard* pCard) {
-    printf("+--------Karte--------+\n");
+    printf("+-------------Auto-------------+\n");
     printf("| Name: ");
     puts(pCard->name);
-    printf("| Value 1: %i\n", pCard->value1);
-    printf("| Value 2: %lf\n", pCard->value2);
-    printf("owned by player: %i", pCard->ownedByPlayer);
-    printf("+---------------------+\n\n");
+    printf("| (1) Top Speed: %i\n", pCard->value1);
+    printf("| (2) Fuel (l) / 100km: %1.2lf\n", pCard->value2);
+    printf("+------------------------------+\n\n");
 }
 
 // Erste Karte vom PC bestimmen - Noah
 sCard* GetNextCard(bool isPlayer, sCard* pFirst, sCard* pCurrentCard) {
     bool secondRound = false;
-    for (sCard* pCurrent = pCurrentCard->pNext; pCurrent != NULL; pCurrent = pCurrent->pNext)
+    sCard* pCurrent = pCurrentCard;
+    for (int i = 0; i < 20; i++)
     {
+        if (pCurrent != NULL && pCurrent->pNext != NULL)
+        {
+            pCurrent = pCurrent->pNext;
+        }
+        else
+        {
+            pCurrent = pFirst;
+        }
+
         if (pCurrent->ownedByPlayer == isPlayer)
         {
             return pCurrent;
         }
-
     }
     return NULL;
 }
@@ -153,16 +171,31 @@ sCard* GetNextCard(bool isPlayer, sCard* pFirst, sCard* pCurrentCard) {
 sCard* CreateCardList(int cardCount) {
     sCard* pFirst = NULL;
     sCard* pLast = NULL;
-    int value1[10] = { 2,6,45,34,75,32,45,34,88,30 };
-    double value2[10] = { 20.00, 14.00, 16.3, 25.3, 75.3, 45.2, 66.4, 12.5, 78.0, 55.9 };
+
+    char names[10][50] = {
+    "Honda Civic TCR",
+    "Skoda Octavia",
+    "BMW i8",
+    "Lamborghini Aventador",
+    "Subaru WRX STI",
+    "Bugatti Divo",
+    "Tesla Model S",
+    "Audi R8 V10",
+    "Volkswagen Golf GTI R5",
+    "Tesla Cybertruck"
+    };
+
+    int maxSpeed[10] = {280, 240, 300, 369, 320, 345, 330, 350, 245, 220};
+    double litersPerHundredKm[10] = { 11.69, 8.28, 14.86, 13.34, 15.72, 12.29, 0.00, 10.97, 6.94, 0.00};
+ 
 
     for (int el = 0; el < cardCount; el++)
     {
         sCard* pNew = (sCard*)malloc(sizeof(sCard));
         pNew->number = el + 1;
-        strcpy_s(pNew->name, "Test");
-        pNew->value1 = value1[el];
-        pNew->value2 = value2[el];
+        strcpy_s(pNew->name, names[el]);
+        pNew->value1 = maxSpeed[el];
+        pNew->value2 = litersPerHundredKm[el];
         pNew->ownedByPlayer = (el + 1) % 2 == 0;
         pNew->pNext = NULL;
         if (pFirst == NULL) pFirst = pNew;
@@ -205,6 +238,5 @@ void SwapCard(sCard* pFirst, sCard* pSource, int number) {
         strcpy_s(pSource->name, pTemp->name);
         pSource->value1 = pTemp->value1;
         pSource->value2 = pTemp->value2;
-
     }
 }

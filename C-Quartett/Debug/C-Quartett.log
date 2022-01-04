@@ -1,4 +1,5 @@
 ﻿  main.cpp
-E:\bs\m411-project\C-Quartett\main.cpp(29,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-E:\bs\m411-project\C-Quartett\main.cpp(177,9): warning C4101: 'randomNumber': unreferenced local variable
+E:\bs\m411-project\C-Quartett\main.cpp(32,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\bs\m411-project\C-Quartett\main.cpp(101,14): warning C4101: 'continueGame': unreferenced local variable
+E:\bs\m411-project\C-Quartett\main.cpp(209,9): warning C4101: 'randomNumber': unreferenced local variable
   C-Quartett.vcxproj -> E:\bs\m411-project\Debug\C-Quartett.exe
