@@ -1,5 +1,8 @@
 ﻿  main.cpp
-E:\bs\m411-project\C-Quartett\main.cpp(32,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-E:\bs\m411-project\C-Quartett\main.cpp(101,14): warning C4101: 'continueGame': unreferenced local variable
-E:\bs\m411-project\C-Quartett\main.cpp(209,9): warning C4101: 'randomNumber': unreferenced local variable
-  C-Quartett.vcxproj -> E:\bs\m411-project\Debug\C-Quartett.exe
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(34,15): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(52,21): warning C4473: "scanf_s": nicht genügend Argumente für Formatzeichenfolge übergeben
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(52,21): message : Platzhalter und deren Parameter erwarten 2 variadic-Argumente, es wurden aber 1 variadic-Argumente bereitgestellt.
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(52,21): message : Das fehlende variadic-Argument "2" ist für die Zeichenfolge "%c" erforderlich.
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(52,21): message : Dieses Argument wird als Puffergröße verwendet.
+C:\Users\vmadmin\source\repos\C-Quartett\C-Quartett\main.cpp(250,9): warning C4101: "randomNumber": Unreferenzierte lokale Variable
+  C-Quartett.vcxproj -> C:\Users\vmadmin\source\repos\C-Quartett\Debug\C-Quartett.exe

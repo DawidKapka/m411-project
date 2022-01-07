@@ -27,14 +27,51 @@ void OutputTitle();
 bool ProcessAnswer(sCard*, sCard*, int*);
 bool CheckLoss(sCard*, sCard*);
 char* GetNameArray();
+void OutputPcCard(sCard*);
+void Play();
 
 int main() {
     srand(time(0));
-    sCard* pCardList = CreateCardList(10);
-    MixList(pCardList);
-    StartGame(pCardList);
+    Play();
     system("pause");
     return 0;
+}
+
+// Spiel starten und überprüfen, ob es neugestartet werden soll - Dawid
+void Play() {
+    bool playAgain = true;
+    while (playAgain)
+    {
+        sCard* pCardList = CreateCardList(10);
+        MixList(pCardList);
+        StartGame(pCardList);
+        char answer = '\0';
+        bool answerWrong = true;
+        while (answerWrong)
+        {
+            printf("\nWillst du nochmals spielen? (y/n)\n");
+            scanf_s("%c", &answer);
+            if (answer == 'y' || answer == 'n')
+            {
+                answerWrong = false;
+                if (answer == 'n')
+                {
+                    playAgain = false;
+                }
+                else {
+                    system("@cls||clear");
+                }
+            }
+            // wiederholen, wenn antwort nicht ein 'y' oder 'n' ist.
+            else {
+                answerWrong = true;
+                printf("\nUng\x81ltige Eingabe!\n");
+            }
+        }
+        
+
+    }
+
 }
 
 // Titeltext ausgeben - Dawid
@@ -76,16 +113,17 @@ void StartGame(sCard* pFirst) {
             if (roundWon)
             {
                 printf("\nDu hast diese Runde gewonnen!\n");
+                OutputPcCard(pCurrentPcCard);
                 pCurrentPcCard->ownedByPlayer = true;
                 pCurrentPlayerCard = pCurrentPlayerCard->pNext;
             }
             else {
                 printf("\nDu hast diese Runde verloren!\n");
+                OutputPcCard(pCurrentPcCard);
                 pCurrentPlayerCard->ownedByPlayer = false;
                 pCurrentPcCard = pCurrentPcCard->pNext;
             }
-            printf("\nKarte des Gegners:\n\n");
-            OutputCardFormatted(pCurrentPcCard);
+
             round++;
             pCurrentPlayerCard = GetNextCard(true, pFirst, pCurrentPlayerCard);
             pCurrentPcCard = GetNextCard(false, pFirst, pCurrentPcCard);
@@ -98,11 +136,16 @@ void StartGame(sCard* pFirst) {
         else {
             printf("\nUng\x81ultige Eingabe!\n");
         }
-        char continueGame;
         printf("\nKlicke Enter um weiterzuspielen...\n");
         _getch();
         system("@cls||clear");
     }
+}
+
+// Karte des Gegners am Schluss der Runde anzeigen - Noah
+void OutputPcCard(sCard* pPc) {
+    printf("\nKarte des Gegners:\n\n");
+    OutputCardFormatted(pPc);
 }
 
 // Überprüfen, ob Spieler oder PC verloren hat - Noah
