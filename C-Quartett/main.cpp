@@ -211,7 +211,7 @@ bool ProcessAnswer(sCard* pCurrentPlayerCard, sCard* pCurrentPcCard, int* answer
     return roundWon;
     
 }
-// Karte Formatiert in der Console ausgeben - Dawid
+// Karte Formatiert in der Console ausgeben - Noah
 // Rückgabetyp: Void
 void OutputCardFormatted(sCard* pCard) {
     printf("+-------------Auto-------------+\n");
